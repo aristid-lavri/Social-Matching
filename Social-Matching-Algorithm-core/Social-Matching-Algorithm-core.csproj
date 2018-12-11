@@ -6,4 +6,10 @@
     <RootNamespace>Social_Matching_Algorithm_core</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="core.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="core\" />
+  </ItemGroup>
 </Project>
