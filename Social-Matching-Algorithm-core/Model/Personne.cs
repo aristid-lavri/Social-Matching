@@ -9,7 +9,7 @@ namespace Social_Matching_Algorithm_core.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public PersonneType PersonneType { get; set; }
-        public IEnumerable<Interest> PersonneInterests { get; set; }
-        public IEnumerable<Personne> MatchingPersonnes { get; set; }
+        public List<Interest> PersonneInterests { get; set; }
+        public Dictionary<Personne, int> MatchingPersonnes { get; set; }
     }
 }

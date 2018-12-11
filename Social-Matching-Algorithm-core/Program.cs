@@ -7,6 +7,8 @@ namespace Social_Matching_Algorithm_core
 {
     internal class Program
     {
+        const int interestCount = 6;
+
         // Initialisation des centres d'intérêts
         static List<Interest> Interests = new List<Interest>
             {
@@ -213,13 +215,47 @@ namespace Social_Matching_Algorithm_core
 
             foreach (Personne item in Parrains)
             {
-
-                foreach(Personne fieul in Filleuls)
+                var score = 0;
+                var i = 0;
+                foreach(Personne filleul in Filleuls)
                 {
+                    if(interestCount != interestCount-1)
+                    {
+                        if(filleul.PersonneInterests.Contains(item.PersonneInterests[i]))
+                        {
+                            var fInterestIndex = filleul.PersonneInterests.IndexOf(item.PersonneInterests[i]);
+                            if (fInterestIndex - i != 0)
+                                score = 1;
+                            else
+                                score = 5;
 
+                            if(item.MatchingPersonnes == null)
+                                item.MatchingPersonnes = new Dictionary<Personne, int>();
+
+                            if(!item.MatchingPersonnes.ContainsKey(filleul))
+                                item.MatchingPersonnes.Add(filleul,score);
+                            else
+                            {
+                                item.MatchingPersonnes[filleul] += score;
+                            }
+
+                            score = 0;
+                        }
+                    }
                 }
             }
 
+
+            Console.WriteLine("All potential matching");
+            foreach (var item in Parrains)
+            {
+                Console.WriteLine($"Parrain: { item.FirstName}");
+                foreach (var match in item.MatchingPersonnes.OrderByDescending(p=>p.Value))
+                {
+                    Console.Write($"match with :  {match.Key.FirstName} at {match.Value}  ");
+                }
+                Console.WriteLine("");
+            }
 
 
             Console.ReadLine();
