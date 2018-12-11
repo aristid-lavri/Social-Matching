@@ -11,5 +11,6 @@ namespace Social_Matching_Algorithm_core.Model
         public PersonneType PersonneType { get; set; }
         public List<Interest> PersonneInterests { get; set; }
         public Dictionary<Personne, int> MatchingPersonnes { get; set; }
+        public bool isMatched { get; set; }
     }
 }

@@ -258,7 +258,59 @@ namespace Social_Matching_Algorithm_core
             }
 
 
+            // choose best matching 
+            var maxcount = Parrains.Max(p => p.MatchingPersonnes.Count);
+            foreach (var item in Parrains)
+            {
+                var currentParrain = item;
+                var others = Parrains.Where(p => p != item).ToList();
+
+                BestMatch(ref currentParrain, ref others);
+            }
+
+            Console.WriteLine("All best matching");
+            foreach (var item in Parrains)
+            {
+                Console.WriteLine($"Parrain: { item.FirstName}");
+                foreach (var match in item.MatchingPersonnes.OrderByDescending(p => p.Value))
+                {
+                    Console.Write($"match with :  {match.Key.FirstName} at {match.Value}  ");
+                }
+                Console.WriteLine("");
+            }
+
+
             Console.ReadLine();
+        }
+
+        static void BestMatch(ref Personne personne, ref List<Personne> others)
+        {
+            var count = personne.MatchingPersonnes.Count;
+            var i = 1;
+            while (count >= i)
+            {
+                var currentFilleul = personne.MatchingPersonnes.OrderByDescending(p=>p.Value).FirstOrDefault(p=> !p.Key.isMatched);
+                foreach (var item in others)
+                {
+                    if(item.MatchingPersonnes.ContainsKey(currentFilleul.Key))
+                    {
+                        item.MatchingPersonnes.TryGetValue(currentFilleul.Key, out var filleulScore);
+                        if (currentFilleul.Value >= filleulScore)
+                        {
+                            item.MatchingPersonnes.Remove(currentFilleul.Key);
+                            personne.MatchingPersonnes.OrderByDescending(p => p.Value).FirstOrDefault().Key.isMatched = true;
+                        }
+                        else
+                        {
+                            personne.MatchingPersonnes.Remove(currentFilleul.Key);
+                            break;
+                        }
+                    }
+                }
+                i++;
+                //BestMatch(ref personne, ref others);
+            }
+
         }
 
         private static List<Personne> GetPersonnesForInterest(Interest interest, List<Personne> personnes)
