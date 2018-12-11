@@ -213,7 +213,11 @@ namespace Social_Matching_Algorithm_core
 
             foreach (Personne item in Parrains)
             {
-                
+
+                foreach(Personne fieul in Filleuls)
+                {
+
+                }
             }
 
 
