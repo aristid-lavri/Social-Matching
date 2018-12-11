@@ -8,10 +8,7 @@ namespace Social_Matching_Algorithm_core
     internal class Program
     {
         // Initialisation des centres d'intérêts
-
-        private static void Main(string[] args)
-        {
-            Interest[] Interests =
+        static List<Interest> Interests = new List<Interest>
             {
                 new Interest { Code = 01, Name="Math"},
                 new Interest { Code = 02, Name="Algorithme"},
@@ -35,7 +32,7 @@ namespace Social_Matching_Algorithm_core
                 new Interest { Code = 20, Name="SMS"},
             };
 
-            Personne[] Parrains = new Personne[6]
+        static List<Personne> Parrains = new List<Personne>
             {
                 new Personne
                 {
@@ -62,7 +59,7 @@ namespace Social_Matching_Algorithm_core
                         Interests[7],
                         Interests[9],
                         Interests[10],
-                        Interests[20],
+                        Interests[19],
                     }
                 },
                 new Personne
@@ -122,8 +119,8 @@ namespace Social_Matching_Algorithm_core
                     }}
             };
 
-            Personne[] Filleuls = new Personne [6]
-            {
+        static List<Personne> Filleuls = new List<Personne>
+        {
                 new Personne
                 {
                     FirstName = "P", LastName= "",PersonneType = PersonneType.Filleul,
@@ -132,7 +129,7 @@ namespace Social_Matching_Algorithm_core
                         Interests[4],
                         Interests[12],
                         Interests[10],
-                        Interests[20],
+                        Interests[19],
                         Interests[3],
                         Interests[2],
                         Interests[6],
@@ -163,17 +160,17 @@ namespace Social_Matching_Algorithm_core
                         Interests[15],
                         Interests[5],
                         Interests[17],
-                        Interests[20],
+                        Interests[19],
                     }
                 },
                 new Personne
                 {
                     FirstName = "S", LastName= "",PersonneType = PersonneType.Filleul,
                     PersonneInterests = new List<Interest>{
-                        Interests[20],
+                        Interests[19],
                         Interests[14],
                         Interests[18],
-                        Interests[19],
+                        Interests[0],
                         Interests[4],
                         Interests[17],
                         Interests[16],
@@ -189,7 +186,7 @@ namespace Social_Matching_Algorithm_core
                         Interests[14],
                         Interests[9],
                         Interests[5],
-                        Interests[20],
+                        Interests[19],
                         Interests[10],
                         Interests[2],
                     }
@@ -201,24 +198,22 @@ namespace Social_Matching_Algorithm_core
                         Interests[7],
                         Interests[3],
                         Interests[6],
-                        Interests[20],
+                        Interests[0],
                         Interests[11],
                         Interests[19],
                         Interests[11],
                         Interests[13],
                     }
                 }
-            };
+        };
 
-
+        private static void Main(string[] args)
+        {
             Dictionary<Interest, List<Personne>> interestNeeded = new Dictionary<Interest, List<Personne>>();
-            foreach (Interest item in Interests)
+
+            foreach (Personne item in Parrains)
             {
-                bool IsAllreadyIn = interestNeeded.Keys.Contains(item);
-                if (!IsAllreadyIn)
-                {
-                    interestNeeded.Add(item, GetPersonnesForInterest(item, Filleuls));
-                }
+                
             }
 
 
@@ -226,7 +221,7 @@ namespace Social_Matching_Algorithm_core
             Console.ReadLine();
         }
 
-        private static List<Personne> GetPersonnesForInterest(Interest interest, Personne[] personnes)
+        private static List<Personne> GetPersonnesForInterest(Interest interest, List<Personne> personnes)
         {
             return personnes.Where(p => p.PersonneInterests.Contains(interest)).ToList();
         }
