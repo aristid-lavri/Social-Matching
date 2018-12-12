@@ -211,30 +211,34 @@ namespace Social_Matching_Algorithm_core
 
         private static void Main(string[] args)
         {
-            foreach (Personne item in Parrains)
-            {
-                var score = 0;
-                var i = 0;
-                foreach(Personne filleul in Filleuls)
+            var i = 0;
+
+            while (i < interestCount)
+            { 
+                foreach (Personne item in Parrains)
                 {
-                    if(filleul.PersonneInterests.Contains(item.PersonneInterests[i]))
+                    var score = 0;
+                    foreach (Personne filleul in Filleuls)
                     {
-                        var fInterestIndex = filleul.PersonneInterests.IndexOf(item.PersonneInterests[i]);
-                        score = (fInterestIndex - i != 0) ? 1 : 5;
-
-                        if(item.MatchingPersonnes == null)
-                            item.MatchingPersonnes = new Dictionary<Personne, int>();
-
-                        if(!item.MatchingPersonnes.ContainsKey(filleul))
-                            item.MatchingPersonnes.Add(filleul,score);
-                        else
+                        if (filleul.PersonneInterests.Contains(item.PersonneInterests[i]))
                         {
-                            item.MatchingPersonnes[filleul] += score;
+                            var fInterestIndex = filleul.PersonneInterests.IndexOf(item.PersonneInterests[i]);
+                            score = (fInterestIndex - i != 0) ? 1 : 5;
+
+                            if (item.MatchingPersonnes == null)
+                                item.MatchingPersonnes = new Dictionary<Personne, int>();
+
+                            if (!item.MatchingPersonnes.ContainsKey(filleul))
+                                item.MatchingPersonnes.Add(filleul, score);
+                            else
+                            {
+                                item.MatchingPersonnes[filleul] += score;
+                            }
                         }
                     }
                 }
+                i++;
             }
-
 
             Console.WriteLine("All potential matching");
             foreach (var item in Parrains)
