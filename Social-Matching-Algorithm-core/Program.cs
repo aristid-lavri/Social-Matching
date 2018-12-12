@@ -211,35 +211,25 @@ namespace Social_Matching_Algorithm_core
 
         private static void Main(string[] args)
         {
-            Dictionary<Interest, List<Personne>> interestNeeded = new Dictionary<Interest, List<Personne>>();
-
             foreach (Personne item in Parrains)
             {
                 var score = 0;
                 var i = 0;
                 foreach(Personne filleul in Filleuls)
                 {
-                    if(interestCount != interestCount-1)
+                    if(filleul.PersonneInterests.Contains(item.PersonneInterests[i]))
                     {
-                        if(filleul.PersonneInterests.Contains(item.PersonneInterests[i]))
+                        var fInterestIndex = filleul.PersonneInterests.IndexOf(item.PersonneInterests[i]);
+                        score = (fInterestIndex - i != 0) ? 1 : 5;
+
+                        if(item.MatchingPersonnes == null)
+                            item.MatchingPersonnes = new Dictionary<Personne, int>();
+
+                        if(!item.MatchingPersonnes.ContainsKey(filleul))
+                            item.MatchingPersonnes.Add(filleul,score);
+                        else
                         {
-                            var fInterestIndex = filleul.PersonneInterests.IndexOf(item.PersonneInterests[i]);
-                            if (fInterestIndex - i != 0)
-                                score = 1;
-                            else
-                                score = 5;
-
-                            if(item.MatchingPersonnes == null)
-                                item.MatchingPersonnes = new Dictionary<Personne, int>();
-
-                            if(!item.MatchingPersonnes.ContainsKey(filleul))
-                                item.MatchingPersonnes.Add(filleul,score);
-                            else
-                            {
-                                item.MatchingPersonnes[filleul] += score;
-                            }
-
-                            score = 0;
+                            item.MatchingPersonnes[filleul] += score;
                         }
                     }
                 }
